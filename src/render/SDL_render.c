@@ -545,7 +545,7 @@ QueueCmdFillRects(SDL_Renderer *renderer, const SDL_FRect * rects, const int cou
                 const int num_indices = 6 * count;
                 const int size_indices = 4;
                 int cur_indice = 0;
-                int color = (renderer->color.r << 0) | (renderer->color.g << 8) | (renderer->color.b << 16) | ((Uint32)renderer->color.a << 24);
+                SDL_Color color = renderer->color;
 
                 for (i = 0; i < count; ++i) {
                     float minx, miny, maxx, maxy;
@@ -628,7 +628,7 @@ QueueCmdCopyEx(SDL_Renderer *renderer, SDL_Texture * texture,
 static int
 QueueCmdGeometry(SDL_Renderer *renderer, SDL_Texture *texture,
         const float *xy, int xy_stride,
-        const int *color, int color_stride,
+        const SDL_Color *color, int color_stride,
         const float *uv, int uv_stride,
         int num_vertices,
         const void *indices, int num_indices, int size_indices,
@@ -3584,7 +3584,7 @@ SDL_RenderGeometry(SDL_Renderer *renderer,
 {
     const float *xy = &vertices[0].position.x;
     int xy_stride = sizeof (SDL_Vertex);
-    const int *color = (int *)&vertices[0].color.r;
+    const SDL_Color *color = &vertices[0].color;
     int color_stride = sizeof (SDL_Vertex);
     const float *uv = &vertices[0].tex_coord.x;
     int uv_stride = sizeof (SDL_Vertex);
@@ -3599,7 +3599,7 @@ remap_one_indice(
         int k,
         SDL_Texture *texture,
         const float *xy, int xy_stride,
-        const int *color, int color_stride,
+        const SDL_Color *color, int color_stride,
         const float *uv, int uv_stride)
 {
     const float *xy0_, *xy1_, *uv0_, *uv1_;
@@ -3638,7 +3638,7 @@ remap_indices(
         int k,
         SDL_Texture *texture,
         const float *xy, int xy_stride,
-        const int *color, int color_stride,
+        const SDL_Color *color, int color_stride,
         const float *uv, int uv_stride)
 {
     int i;
@@ -3661,7 +3661,7 @@ static int SDLCALL
 SDL_SW_RenderGeometryRaw(SDL_Renderer *renderer,
                          SDL_Texture *texture,
                          const float *xy, int xy_stride,
-                         const int *color, int color_stride,
+                         const SDL_Color *color, int color_stride,
                          const float *uv, int uv_stride,
                          int num_vertices,
                          const void *indices, int num_indices, int size_indices)
@@ -3940,7 +3940,7 @@ int
 SDL_RenderGeometryRaw(SDL_Renderer *renderer,
                                   SDL_Texture *texture,
                                   const float *xy, int xy_stride,
-                                  const int *color, int color_stride,
+                                  const SDL_Color *color, int color_stride,
                                   const float *uv, int uv_stride,
                                   int num_vertices,
                                   const void *indices, int num_indices, int size_indices)
