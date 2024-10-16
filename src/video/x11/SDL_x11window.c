@@ -2131,7 +2131,7 @@ bool X11_SyncWindow(SDL_VideoDevice *_this, SDL_Window *window)
     /* 100ms is fine for most cases, but, for some reason, maximizing
      * a window can take a very long time.
      */
-    timeout += window->internal->pending_operation & X11_PENDING_OP_MAXIMIZE ? SDL_MS_TO_NS(1000) : SDL_MS_TO_NS(100);
+    timeout += window->internal->pending_operation & X11_PENDING_OP_MAXIMIZE ? SDL_MS_TO_NS(10000) : SDL_MS_TO_NS(10000);
 
     return X11_SyncWindowTimeout(_this, window, timeout);
 }
